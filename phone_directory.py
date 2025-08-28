@@ -1,70 +1,91 @@
-# ADD CONTACT
 import json
 
+# глобальные переменные
+phone_directory = "contacts.json"  # путь к файлу
 
-def add_contact():
+new_contact = {
+    "name": input("Введите имя: "),
+    "cell_number": int(input("Введите номер телефона: ")),
+    "email": input("Введите адрес эл.почты: "),
+    "telegram": input("Введите telegram: "),
+    "comment": input("Доп. информация: "),
+}
+
+contacts = []  # создаем список
+
+
+def add_contact():  # функция добавления контакта в список contacts
     import json
-    new_contact = {
-        "name": input("Input name: "),
-        "cell_number": int(input("Input cell number: ")),
-        "email": input("Input email: "),
-        "telegram": input("Input telegram: "),
-        "comment": input("Input comment: "),
-    }
 
-    book_of_contacts = "contacts.json"
-    contacts = []
-
-    with open(book_of_contacts, 'r', encoding='utf-8') as file:
-        contacts = json.load(file)
+    with open(phone_directory, 'r', encoding='utf-8') as file:
+        contacts = json.load(file)  # обращается к глобальной переменной
 
     contacts.append(new_contact)
 
-    with open(book_of_contacts, "w", encoding='utf-8') as file:
-        json.dump(contacts, file, indent=4, ensure_ascii=False)
+    with open(phone_directory, "w", encoding='utf-8') as file:
+        sorted_contacts = sorted(contacts, key=lambda x: x['name'])  # сортировка по имени в ABC
+        json.dump(sorted_contacts, file, indent=4,
+                  ensure_ascii=False)  # запись в файл формате json с отступами и кириллицей
 
     print("Контакт добавлен!")
     return new_contact
 
 
-# add_contact()  # добавить контакт
+add_contact()  # добавить контакт
+
 
 # READ ALL CONTACTS
-
-
 def read_all_contact():
-    with open("contacts.json", "r", encoding='utf-8') as file:
+    with open(phone_directory, "r", encoding='utf-8') as file:
         for i in file.readlines():
             print(i.strip())
-        # data = json.load(file)
-        # print(data)
 
 
-# read_all_contact() # Прочитать все контакты
+read_all_contact()  # Прочитать все контакты
 
 
+# FIND CONTACT
 def find_contact():
     name = input("Input name: ")
 
-    try:
-        with open("contacts.json", "r", encoding='utf-8') as file:
-            data = json.load(file)
+    with open(phone_directory, "r", encoding='utf-8') as file:
+        data = json.load(file)
 
-            found_contacts = []
-            for contact in data:
-                if contact["name"].lower() == name.lower():
-                    found_contacts.append(contact)
+        found_contacts = []
+        for contact in data:
+            if contact["name"] == name:
+                found_contacts.append(contact)
 
-            if found_contacts:
-                print("Найденные контакты:")
-                for contact in found_contacts:
-                    print(json.dumps(contact, ensure_ascii=False, indent=2))
-            else:
-                print(f"Контакт с именем '{name}' не найден.")
+        if found_contacts:
+            print("Найденные контакты:")
+            for contact in found_contacts:
+                print(json.dumps(contact, ensure_ascii=False, indent=2))
+        else:
+            print(f"Контакт '{name}' не найден.")
 
-    except FileNotFoundError:
-        print("Файл contacts.json не найден.")
-    except json.JSONDecodeError:
-        print("Ошибка чтения JSON файла.")
 
-# find_contact() # найти контакт
+find_contact()  # найти контакт
+
+
+# DEL
+def delete_contact():
+    name = input("Введите имя контакта для удаления: ")
+
+    with open(phone_directory, "r", encoding='utf-8') as file:
+        data = json.load(file)
+
+        # Сохраняем только те контакты, которые не нужно удалять
+        original_length = len(data)
+        data = [contact for contact in data if contact["name"] != name]
+
+    if len(data) == original_length:
+        print(f"Контакт'{name}' не найден.")
+        return
+
+    # Сохраняем обновленные данные
+    with open(phone_directory, "w", encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
+    print(f"Все контакты с именем '{name}' удалены!")
+
+
+delete_contact()
