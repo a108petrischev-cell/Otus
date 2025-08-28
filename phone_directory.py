@@ -11,11 +11,11 @@ new_contact = {
     "comment": input("Доп. информация: "),
 }
 
-contacts = []  # создаем список
-
 
 def add_contact():  # функция добавления контакта в список contacts
     import json
+
+    contacts = []
 
     with open(phone_directory, 'r', encoding='utf-8') as file:
         contacts = json.load(file)  # обращается к глобальной переменной
