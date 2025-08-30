@@ -3,17 +3,16 @@ import json
 # глобальные переменные
 phone_directory = "contacts.json"  # путь к файлу
 
-new_contact = {
-    "name": input("Введите имя: "),
-    "cell_number": int(input("Введите номер телефона: ")),
-    "email": input("Введите адрес эл.почты: "),
-    "telegram": input("Введите telegram: "),
-    "comment": input("Доп. информация: "),
-}
-
-
 def add_contact():  # функция добавления контакта в список contacts
     import json
+
+    new_contact = {
+        "name": input("Введите имя: ").title(),
+        "cell_number": int(input("Введите номер телефона: ")),
+        "email": input("Введите адрес эл.почты: "),
+        "telegram": input("Введите telegram: "),
+        "comment": input("Доп. информация: "),
+    }
 
     contacts = []
 
@@ -31,7 +30,7 @@ def add_contact():  # функция добавления контакта в с
     return new_contact
 
 
-add_contact()  # добавить контакт
+#add_contact()  # добавить контакт
 
 
 # READ ALL CONTACTS
@@ -41,7 +40,7 @@ def read_all_contact():
             print(i.strip())
 
 
-read_all_contact()  # Прочитать все контакты
+#read_all_contact()  # Прочитать все контакты
 
 
 # FIND CONTACT
@@ -64,7 +63,7 @@ def find_contact():
             print(f"Контакт '{name}' не найден.")
 
 
-find_contact()  # найти контакт
+#find_contact()  # найти контакт
 
 
 # DEL
@@ -87,5 +86,33 @@ def delete_contact():
         json.dump(data, file, ensure_ascii=False, indent=4)
     print(f"Все контакты с именем '{name}' удалены!")
 
+def change_contact():
+    pass
 
-delete_contact()
+
+#delete_contact()
+
+def main_menu():
+    choose_function = int(input('''Введите:
+    1 - чтобы создать новый контакт
+    2 - чтобы прочитать справочник
+    3 - чтобы найти нужный контакт
+    4 - чтобы изменить контакт
+    5 - чтобы удалить контакт
+    '''))
+
+    if choose_function == 1:
+        add_contact()
+    elif choose_function == 2:
+        read_all_contact()
+    elif choose_function == 3:
+        find_contact()
+    elif choose_function == 4:
+        change_contact()
+    elif choose_function == 5:
+        delete_contact()
+    else:
+        print("Такого меню нет в списке.")
+        main_menu()
+
+main_menu()
