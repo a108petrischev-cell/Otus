@@ -1,5 +1,7 @@
 import json
 
+from unicodedata import digit
+
 
 def add_contact():
     '''
@@ -89,7 +91,7 @@ def delete_contact():
 
 def change_contact():
     '''
-    Поиск и изменение атрибутов контакта
+    Изменение атрибутов контакта
     '''
 
     name = input("Введите имя контакта, который хотите изменить: ").title()
@@ -122,7 +124,9 @@ def change_contact():
 
     original_contact = contact_to_change.copy()
 
-    while True:
+    editing_contact = True
+
+    while editing_contact:
         print("\nЧто вы хотите изменить?")
         print("1. Имя")
         print("2. Номер телефона")
@@ -190,7 +194,6 @@ def main_menu():
         delete_contact()
     else:
         print("Такого пункта меню нет в списке.")
-        main_menu()
 
 
 main_menu()
