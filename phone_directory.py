@@ -1,10 +1,10 @@
 import json
 
-phone_directory = "contacts.json"  # путь к файлу
 
-
-def add_contact():  # функция добавления контакта в список contacts
-    import json
+def add_contact():
+    '''
+    функция добавления контакта в список contacts
+    '''
 
     new_contact = {
         "name": input("Введите имя: ").title(),
@@ -16,30 +16,38 @@ def add_contact():  # функция добавления контакта в с
 
     directory = []
 
-    with open(phone_directory, 'r', encoding='utf-8') as file:
+    with open("contacts.json", 'r', encoding='utf-8') as file:
         directory = json.load(file)
 
     directory.append(new_contact)
 
-    with open(phone_directory, "w", encoding='utf-8') as file:
-        sorted_contacts = sorted(directory, key=lambda x: x['name'])  # сортировка по имени в ABC
+    with open("contacts.json", "w", encoding='utf-8') as file:
+        sorted_contacts = sorted(directory, key=lambda x: x['name'])
         json.dump(sorted_contacts, file, indent=4,
-                  ensure_ascii=False)  # запись в файл формате json с отступами и кириллицей
+                  ensure_ascii=False)
 
     print("Контакт добавлен!")
     return new_contact
 
 
 def read_all_contact():
-    with open(phone_directory, "r", encoding='utf-8') as file:
+    '''
+    функция выводит весь справочник
+    '''
+
+    with open("contacts.json", "r", encoding='utf-8') as file:
         for i in file.readlines():
             print(i.strip())
 
 
 def find_contact():
+    '''
+    функция поиска контакта по имени
+    '''
+
     name = input("Input name: ")
 
-    with open(phone_directory, "r", encoding='utf-8') as file:
+    with open("contacts.json", "r", encoding='utf-8') as file:
         directory = json.load(file)
 
         found_contacts = []
@@ -56,9 +64,13 @@ def find_contact():
 
 
 def delete_contact():
+    '''
+    Поиск и удаление контакта по имени
+    '''
+
     name = input("Введите имя контакта для удаления: ")
 
-    with open(phone_directory, "r", encoding='utf-8') as file:
+    with open("contacts.json", "r", encoding='utf-8') as file:
         directory = json.load(file)
 
         # Сохраняем только те контакты, которые не нужно удалять
@@ -70,15 +82,19 @@ def delete_contact():
         return
 
     # Сохраняем обновленные данные
-    with open(phone_directory, "w", encoding='utf-8') as file:
+    with open("contacts.json", "w", encoding='utf-8') as file:
         json.dump(directory, file, ensure_ascii=False, indent=4)
     print(f"Все контакты с именем '{name}' удалены!")
 
 
 def change_contact():
+    '''
+    Поиск и изменение атрибутов контакта
+    '''
+
     name = input("Введите имя контакта, который хотите изменить: ").title()
 
-    with open(phone_directory, 'r', encoding='utf-8') as file:
+    with open("contacts.json", 'r', encoding='utf-8') as file:
         directory = json.load(file)
 
     found_contacts = [contact for contact in directory if contact["name"] == name]
@@ -136,7 +152,7 @@ def change_contact():
             if confirm == 'да':
                 directory = [c for c in directory if c != original_contact]
                 directory.append(contact_to_change)
-                with open(phone_directory, "w", encoding='utf-8') as file:
+                with open("contacts.json", "w", encoding='utf-8') as file:
                     sorted_contacts = sorted(directory, key=lambda x: x['name'])
                     json.dump(sorted_contacts, file, indent=4, ensure_ascii=False)
                 print("Контакт успешно обновлен!")
@@ -152,6 +168,8 @@ def change_contact():
 
 
 def main_menu():
+    '''Главное меню'''
+
     choose_function = input('''Введите:
     1 - чтобы создать новый контакт
     2 - чтобы прочитать справочник
