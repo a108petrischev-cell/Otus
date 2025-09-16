@@ -81,7 +81,9 @@ def change_contact_view(controller):
         contact_to_change = found_contacts[0]
 
     new_data = {}
-    while True:
+    new_data_menu = True
+
+    while new_data_menu:
         print("\nЧто вы хотите изменить?")
         print("1. Имя")
         print("2. Телефон")
