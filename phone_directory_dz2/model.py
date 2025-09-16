@@ -71,7 +71,7 @@ class PhoneBook:
         self.contacts.append(contact_dict)
         self.contacts = sorted(self.contacts, key=lambda x: x['name'])
         self.save_to_file()
-        print(f"Контакт успешно добавлен!")
+        print("Контакт успешно добавлен!")
 
     def find_contacts(self, name):
         """
