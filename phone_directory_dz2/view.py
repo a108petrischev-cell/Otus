@@ -62,6 +62,7 @@ def main_menu():
         else:
             print("Нет такого пункта, попробуйте ещё раз")
 
+
 def change_contact_view(controller):
     name = input("Введите имя контакта для изменения: ").title()
     found_contacts = controller.find_contact(name)
@@ -117,6 +118,6 @@ def change_contact_view(controller):
         else:
             print("Неверный ввод.")
 
+
 if __name__ == "__main__":
     main_menu()
-
