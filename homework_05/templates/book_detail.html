@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - Библиотека Python{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h1 class="card-title">{{ book.title }}</h1>
+        <h2 class="card-subtitle mb-2 text-muted">{{ book.author }}</h2>
+        <p class="card-text">{{ book.description | default('Описание для этой книги пока не добавлено.', true) }}</p>
+        <a href="{{ url_for('books') }}" class="btn btn-primary">Назад к списку книг</a>
+    </div>
+</div>
+{% endblock %}

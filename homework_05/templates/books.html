@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Книги - Библиотека Python{% endblock %}
+
+{% block content %}
+<h1>Книги</h1>
+
+<div class="row mt-4">
+    {% for book in books %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Автор: {{ book.author }}</h6>
+                <a href="{{ url_for('book_detail', book_id=book.id) }}" class="btn btn-primary">Описание</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
