@@ -1,8 +1,7 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-import aiosqlite
 
 DATABASE_URL = "sqlite+aiosqlite:///homework_04.db"
 
@@ -33,12 +32,10 @@ class Post(Base):
 
 
 async def get_session() -> AsyncSession:
-    """Создает новую асинхронную сессию"""
     async with AsyncSession(engine) as session:
         yield session
 
 
 async def init_db():
-    """Создает таблицы"""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)

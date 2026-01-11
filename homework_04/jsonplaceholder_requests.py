@@ -1,6 +1,3 @@
-"""
-создайте асинхронные функции для выполнения запросов к ресурсам (используйте aiohttp)
-"""
 import aiohttp
 from typing import List, Dict, Any
 from dataclasses import dataclass
@@ -14,7 +11,6 @@ class ApiResponse:
     status: int
 
 async def fetch_json(session: aiohttp.ClientSession, url: str) -> ApiResponse:
-    """Базовая функция для GET запросов с ответом в JSON"""
     async with session.get(url) as response:
         return ApiResponse(
             data=await response.json(),
@@ -22,7 +18,6 @@ async def fetch_json(session: aiohttp.ClientSession, url: str) -> ApiResponse:
         )
 
 async def fetch_users_data() -> List[dict]:
-    """Загружает данные пользователей"""
     async with aiohttp.ClientSession() as session:
         result = await fetch_json(session, USERS_DATA_URL)
         if result.status == 200:
@@ -30,7 +25,6 @@ async def fetch_users_data() -> List[dict]:
         raise ValueError(f"Ошибка загрузки пользователей: {result.status}")
 
 async def fetch_posts_data() -> List[dict]:
-    """Загружает данные постов"""
     async with aiohttp.ClientSession() as session:
         result = await fetch_json(session, POSTS_DATA_URL)
         if result.status == 200:
